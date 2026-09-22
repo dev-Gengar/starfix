@@ -2,7 +2,7 @@
 
 **语言 / Language：** [中文](fleet-projects.md)
 
-StarFix 规程仓只放通用法条。每个业务项目的 cwd、任务书红线、Grok 参数，登记在 `$FLEET_HOME/projects/<id>/`，不写进本仓。
+StarFix 规程仓只放通用法条和入口脚本（`scripts/fleet`、`scripts/fleet-project.sh`、`scripts/start-fleet.sh`）。每个业务项目的 cwd、任务书红线、Grok 参数，登记在 `$FLEET_HOME/projects/<id>/`，不写进本仓。
 
 ## 目录
 
@@ -29,7 +29,7 @@ fleet project use <id>          # 写 current，随后 start-fleet --respawn
 2. `fleet project add myapp "$HOME/project/myapp"`。若该目录有 `.grok/config.toml`（项目 MCP），加 `--trust`。
 3. 把项目红线写进 `projects/myapp/任务书.md`（可写范围、禁令、验证命令怎么写）。
 4. `fleet project use myapp`
-5. `bash "$FLEET_HOME/start-fleet.sh" --respawn`
+5. `fleet start --respawn`
 6. 先派一张只读摸底单，再派业务。
 
 ## 红线

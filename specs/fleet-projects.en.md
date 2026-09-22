@@ -29,7 +29,7 @@ fleet project use <id>
 2. `fleet project add myapp "$HOME/project/myapp"`. Add `--trust` if that directory has `.grok/config.toml` (project MCP).
 3. Write red lines into `projects/myapp/任务书.md`.
 4. `fleet project use myapp`
-5. `bash "$FLEET_HOME/start-fleet.sh" --respawn`
+5. `fleet start --respawn`
 6. Dispatch a tiny read-only probe before business work.
 
 ## Red lines

@@ -19,7 +19,7 @@ source "$FLEET_HOME/env.sh"
 fleet project add myapp "$HOME/project/myapp"     # add --trust if the dir has .grok/config.toml
 fleet project use myapp
 source "$FLEET_HOME/env.sh"
-bash "$FLEET_HOME/start-fleet.sh" --respawn
+fleet start --respawn
 ```
 
 Dispatch a **read-only probe** first (delivery, receipt, keyword, cwd), then business work.

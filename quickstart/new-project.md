@@ -19,7 +19,7 @@ source "$FLEET_HOME/env.sh"
 fleet project add myapp "$HOME/project/myapp"     # 目录里有 .grok/config.toml 时加 --trust
 fleet project use myapp
 source "$FLEET_HOME/env.sh"
-bash "$FLEET_HOME/start-fleet.sh" --respawn
+fleet start --respawn
 ```
 
 然后先派一张**只读摸底**（投递、回执、关键词、cwd 对不对），再派业务。

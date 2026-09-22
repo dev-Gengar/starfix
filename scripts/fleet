@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+# 舰队日常入口（规程仓）。本机数据在 FLEET_HOME，机器特有脚本可放 $FLEET_HOME/bin。
+set -euo pipefail
+HERE="$(cd "$(dirname "$0")" && pwd)"
+STARFIX_ROOT="${STARFIX_ROOT:-$(cd "${HERE}/.." && pwd)}"
+export STARFIX_ROOT
+
+if [ -z "${FLEET_HOME:-}" ]; then
+  echo "缺少 FLEET_HOME。先 source 本机 env.sh（样例 examples/fleet-env.sample.sh）" >&2
+  exit 2
+fi
+# shellcheck disable=SC1091
+. "${FLEET_HOME}/env.sh"
+export STARFIX_ROOT="${STARFIX_ROOT:-$(cd "${HERE}/.." && pwd)}"
+
+local_bin() {
+  local name="$1"
+  if [ -x "${FLEET_HOME}/bin/${name}" ]; then
+    echo "${FLEET_HOME}/bin/${name}"
+    return 0
+  fi
+  return 1
+}
+
+cmd="${1:-}"
+shift || true
+case "$cmd" in
+  scan)
+    exec bash "${STARFIX_ROOT}/scripts/fleet-scan-tmux.sh"
+    ;;
+  send)
+    exec bash "${STARFIX_ROOT}/quickstart/send-to-tmux.sh" "$@"
+    ;;
+  list)
+    exec python3 "${STARFIX_ROOT}/scripts/task-activator.py" list "$@"
+    ;;
+  report)
+    exec python3 "${STARFIX_ROOT}/scripts/task-activator.py" report "$@"
+    ;;
+  ask)
+    exec python3 "${STARFIX_ROOT}/scripts/task-activator.py" ask "$@"
+    ;;
+  ask-cli)
+    exec python3 "${STARFIX_ROOT}/quickstart/ask-cli.py" "$@"
+    ;;
+  ask-owner)
+    p="$(local_bin fleet-ask-owner.sh)" && exec bash "$p" "$@"
+    echo "本机未配 $FLEET_HOME/bin/fleet-ask-owner.sh" >&2
+    exit 2
+    ;;
+  panel)
+    p="$(local_bin monitor-askpanel.sh)" && exec bash "$p"
+    echo "本机未配请示浮窗" >&2
+    exit 2
+    ;;
+  im-ready)
+    p="$(local_bin im-ready.sh)" && exec bash "$p"
+    echo "本机未配 IM" >&2
+    exit 2
+    ;;
+  im-send)
+    exec python3 "${STARFIX_ROOT}/scripts/relay/im-send.py" "$@"
+    ;;
+  im-poll)
+    exec python3 "${STARFIX_ROOT}/scripts/relay/im-poll.py" "$@"
+    ;;
+  up)
+    p="$(local_bin fleet-up.sh)" && exec bash "$p"
+    echo "本机未配 $FLEET_HOME/bin/fleet-up.sh（launchd 等机器件）" >&2
+    exit 2
+    ;;
+  health)
+    if p="$(local_bin fleet-health.sh)"; then
+      exec bash "$p"
+    fi
+    exec bash "${STARFIX_ROOT}/scripts/fleet-health.sh"
+    ;;
+  handoff)
+    export FLEET_HANDOFF="${FLEET_HOME}/handoff/HANDOFF-latest.md"
+    exec bash "${STARFIX_ROOT}/scripts/hooks/handoff-snapshot.sh"
+    ;;
+  stall)
+    exec bash "${STARFIX_ROOT}/scripts/stall-sentinel.sh" "$@"
+    ;;
+  project)
+    exec bash "${STARFIX_ROOT}/scripts/fleet-project.sh" "$@"
+    ;;
+  start)
+    exec bash "${STARFIX_ROOT}/scripts/start-fleet.sh" "$@"
+    ;;
+  "")
+    echo "用法：fleet project|start|scan|send|list|report|ask|ask-cli|ask-owner|panel|im-ready|im-send|im-poll|up|health|handoff|stall" >&2
+    exit 2
+    ;;
+  *)
+    echo "不认识的子命令：$cmd" >&2
+    echo "用法：fleet project|start|scan|send|list|report|ask|ask-cli|ask-owner|panel|im-ready|im-send|im-poll|up|health|handoff|stall" >&2
+    exit 2
+    ;;
+esac
