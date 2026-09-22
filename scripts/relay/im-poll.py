@@ -8,7 +8,11 @@ import fcntl, sys
 # <日期> 分线监听：FEISHU_POLL_CURSOR 指定独立游标文件（锁随游标文件走，允许不同游标的实例并存）；
 # FEISHU_POLL_ONLY / FEISHU_POLL_EXCLUDE 逗号分隔会话名，只轮询/排除这些会话
 _D0 = os.path.dirname(os.path.abspath(__file__))
-_CURSOR_PATH = os.environ.get('FEISHU_POLL_CURSOR') or os.path.join(_D0, 'feishu-cursor.json')
+_CURSOR_PATH = os.environ.get('FEISHU_POLL_CURSOR') or os.path.join(
+    os.environ.get('FLEET_HOME', ''), 'im-cursor.json'
+)
+if not _CURSOR_PATH or _CURSOR_PATH == 'im-cursor.json':
+    _CURSOR_PATH = os.path.join(_D0, 'feishu-cursor.json')
 _LOCK = open(_CURSOR_PATH + '.lock', 'w')
 try:
     fcntl.flock(_LOCK, fcntl.LOCK_EX | fcntl.LOCK_NB)
@@ -35,7 +39,7 @@ def secret():
 
 _SECRET_FILE = os.environ.get('FEISHU_POLL_SECRET_FILE')  # 分线：另一应用的密钥文件（如<基座项目>机器人）
 D = os.path.dirname(os.path.abspath(__file__))
-CHATS = os.environ.get('FEISHU_POLL_CHATS') or os.path.join(D, 'feishu-chats.json')
+CHATS = os.environ.get('FEISHU_POLL_CHATS') or os.path.join(_imcfg.fleet_home(), 'im-chats.json')
 CURSOR = _CURSOR_PATH
 ONLY = {x.strip() for x in os.environ.get('FEISHU_POLL_ONLY','').split(',') if x.strip()}
 EXCLUDE = {x.strip() for x in os.environ.get('FEISHU_POLL_EXCLUDE','').split(',') if x.strip()}

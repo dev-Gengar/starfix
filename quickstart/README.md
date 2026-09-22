@@ -35,6 +35,8 @@ bash quickstart/demo.sh
 
 不需要：iTerm2、AppleScript、IM 应用、数据库、网络。
 
+demo 跑通之后，把**真实业务目录**接到本机舰队：[new-project.md](new-project.md)。
+
 ## 二、跑 demo.sh
 
 ```bash

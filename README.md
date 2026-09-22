@@ -53,6 +53,7 @@ bash quickstart/demo.sh
 | 舰长该怎么考 | [doctrine/03](doctrine/03-舰长考核与benchmark方向.md) · [benchmarks/captain-v1](benchmarks/captain-v1/README.md) |
 | 机器替舰长审流程 | [docs/trajectory.md](docs/trajectory.md) · [trajectory/](trajectory/) |
 | 脚本与环境变量 | [scripts/README-env.md](scripts/README-env.md) |
+| 把新业务项目接到舰队 | [specs/fleet-projects.md](specs/fleet-projects.md) · [quickstart/new-project.md](quickstart/new-project.md) |
 | 术语中英对照 | [docs/glossary.md](docs/glossary.md) |
 
 ## 适用人群

@@ -43,7 +43,7 @@ PANE="$1"; MSG="$2"; KW="$3"
 
 IDLE_TIMEOUT="${QS_IDLE_TIMEOUT:-30}"
 IDLE_RE="${QS_IDLE_RE:-}"
-if [ -z "$IDLE_RE" ]; then IDLE_RE='(❯|›|»|\$|#|>)[[:space:]]*$'; fi
+if [ -z "$IDLE_RE" ]; then IDLE_RE='(❯|›|»|\$|#|>)[[:space:]]*(│[[:space:]]*)?$'; fi
 
 TMUX_CMD=(tmux)
 if [ -n "${QS_TMUX_SOCKET:-}" ]; then TMUX_CMD=(tmux -L "$QS_TMUX_SOCKET"); fi
@@ -92,6 +92,12 @@ fi
 PID=$("${TMUX_CMD[@]}" display-message -p -t "$PANE" '#{pane_id}' 2>/dev/null || true)
 if [ -z "$PID" ] || ! "${TMUX_CMD[@]}" list-panes -a -F '#{pane_id}' 2>/dev/null | grep -qx -- "$PID"; then
   echo "PANE_NOT_FOUND pane=${PANE}（从 tmux list-panes -a -F '#{pane_id} #{session_name}' 复制，别手写）"
+  exit 3
+fi
+# 光标行读回只看当前行。正文宽于窗格会折行，关键词落到下一行就会 KW_MISMATCH_ABORT。
+WIDTH=$("${TMUX_CMD[@]}" display-message -p -t "$PID" '#{pane_width}' 2>/dev/null || echo 0)
+if [ "${WIDTH:-0}" -gt 4 ] && [ "${#MSG}" -ge "$WIDTH" ]; then
+  echo "MSG_WRAP_ABORT pane=$PID width=$WIDTH msg_chars=${#MSG}（缩短路径/正文后再投，禁止盲回车）"
   exit 3
 fi
 

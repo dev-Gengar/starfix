@@ -53,6 +53,7 @@ The overall score is not the only number: nine abilities are scored separately (
 | How to assess a captain | [doctrine/03](doctrine/03-舰长考核与benchmark方向.en.md) · [benchmarks/captain-v1](benchmarks/captain-v1/README.en.md) |
 | The machine auditing the process | [docs/trajectory.en.md](docs/trajectory.en.md) · [trajectory/](trajectory/) |
 | Scripts and environment variables | [scripts/README-env.en.md](scripts/README-env.en.md) |
+| Attach a new product project to the fleet | [specs/fleet-projects.en.md](specs/fleet-projects.en.md) · [quickstart/new-project.en.md](quickstart/new-project.en.md) |
 | Glossary (zh ↔ en) | [docs/glossary.md](docs/glossary.md) |
 
 ## Who it is for

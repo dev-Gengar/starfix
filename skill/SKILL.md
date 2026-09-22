@@ -157,7 +157,9 @@ python3 scripts/task-activator.py list | add <ID> "<title>" | set <ID> <状态> 
 python3 scripts/task-activator.py ask add Q<NN> "<题干>" --tasks A,B --who Owner | ask answer Q<NN> --answer X | ask list | ask board
 bash scripts/terminal-probe.sh                                                # 上任第一问：我在哪、通道有哪些
 bash scripts/send-to-session.sh <SESSION-UUID> "<正文含关键词>" <关键词>   # 两步投递（iTerm2 参考实现）
-bash scripts/fleet-scan.sh                                                   # 会话清单
+bash scripts/fleet-scan.sh                                                   # 会话清单（无 iTerm2 时用 fleet-scan-tmux.sh）
+# 本机封装：fleet project add <id> <cwd> | use <id> | health | send | list
+# 多项目登记见 specs/fleet-projects.md
 bash scripts/stall-sentinel.sh --once                                        # 停工哨兵
 bash tools/scrub-gate.sh                                                     # 敏感词门禁
 ```

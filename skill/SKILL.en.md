@@ -157,7 +157,9 @@ python3 scripts/task-activator.py list | add <ID> "<title>" | set <ID> <status> 
 python3 scripts/task-activator.py ask add Q<NN> "<question>" --tasks A,B --who Owner | ask answer Q<NN> --answer X | ask list | ask board
 bash scripts/terminal-probe.sh                                               # first question on taking office: where am I, what channels exist
 bash scripts/send-to-session.sh <SESSION-UUID> "<body containing keyword>" <keyword>   # two-step delivery (iTerm2 reference implementation)
-bash scripts/fleet-scan.sh                                                   # session list
+bash scripts/fleet-scan.sh                                                   # session list (use fleet-scan-tmux.sh when there is no iTerm2)
+# local wrapper: fleet project add <id> <cwd> | use <id> | health | send | list
+# multi-project registry: specs/fleet-projects.md
 bash scripts/stall-sentinel.sh --once                                        # stall sentinel
 bash tools/scrub-gate.sh                                                     # scrub gate
 ```

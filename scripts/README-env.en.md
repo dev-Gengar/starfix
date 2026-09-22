@@ -36,6 +36,10 @@ mkdir -p "$FLEET_HOME"
 | `FLEET_SNAPSHOT` | `$FLEET_HOME/fleet-snapshot.txt` | The fleet snapshot from `fleet-scan.sh` (overwritten in place, always the latest) |
 | `FLEET_SCRIPTS_DIR` | the directory the script itself is in | Working directory of `ask-inbox-apply.sh` |
 | `FLEET_INTEGRATION_REPO` | empty | The git repo the integration branch lives in; if unset, the merge status check is skipped |
+| `FLEET_PROJECT` | `$FLEET_HOME/projects/current` | Active product project id; written by `fleet project use` |
+| `FLEET_CREW_CWD` | current project `env.sh` | Crew Grok `--cwd`; `start-fleet` exits if no project is selected |
+| `FLEET_GROK_ARGS` | empty | Extra flags, e.g. `--trust` for project MCP |
+| `FLEET_PROJECT_TEMPLATE` | `$FLEET_HOME/projects/<id>/任务书.md` | That project's task-book skeleton |
 | `IM_ARCHIVE_DIR` | `$FLEET_HOME/im-archive` | Directory where IM conversation archives are written to disk |
 | `FLEET_ACTIVATOR_JSON` | `$FLEET_HOME/task-activator.json` | The activator file read by the floating panel (Swift) |
 
@@ -69,6 +73,7 @@ export IM_APP_SECRET="$(cat ~/.secrets/im-app-secret)"   # recommended
 ```bash
 export FLEET_HOME="$HOME/fleet-data"
 mkdir -p "$FLEET_HOME"
+# new product project: fleet project add app "$HOME/project/app" && fleet project use app
 
 python3 scripts/task-activator.py add T1 "First task" --owner "Crew B"
 python3 scripts/task-activator.py list

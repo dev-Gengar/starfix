@@ -36,6 +36,10 @@ mkdir -p "$FLEET_HOME"
 | `FLEET_SNAPSHOT` | `$FLEET_HOME/fleet-snapshot.txt` | `fleet-scan.sh` 的舰队快照（覆盖式，恒指最新） |
 | `FLEET_SCRIPTS_DIR` | 脚本自身所在目录 | `ask-inbox-apply.sh` 的工作目录 |
 | `FLEET_INTEGRATION_REPO` | 空 | 集成分支所在的 git 仓；不设则跳过并线状态检查 |
+| `FLEET_PROJECT` | `$FLEET_HOME/projects/current` | 当前业务项目 id；由 `fleet project use` 写入 |
+| `FLEET_CREW_CWD` | 当前项目 `env.sh` | 舰员 Grok `--cwd`；未选项目则 start-fleet 退出 |
+| `FLEET_GROK_ARGS` | 空 | 额外参数，如项目 MCP 所需的 `--trust` |
+| `FLEET_PROJECT_TEMPLATE` | `$FLEET_HOME/projects/<id>/任务书.md` | 该项目任务书骨架 |
 | `IM_ARCHIVE_DIR` | `$FLEET_HOME/im-archive` | IM 会话归档落盘目录 |
 | `FLEET_ACTIVATOR_JSON` | `$FLEET_HOME/task-activator.json` | 浮窗（Swift）读的激活器文件 |
 
@@ -69,6 +73,7 @@ export IM_APP_SECRET="$(cat ~/.secrets/im-app-secret)"   # 推荐
 ```bash
 export FLEET_HOME="$HOME/fleet-data"
 mkdir -p "$FLEET_HOME"
+# 新业务项目：fleet project add app "$HOME/project/app" && fleet project use app
 
 python3 scripts/task-activator.py add T1 "第一条任务" --owner 舰员乙
 python3 scripts/task-activator.py list

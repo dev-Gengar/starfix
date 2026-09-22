@@ -30,6 +30,17 @@ tmp="$(mktemp)"
   echo
   echo "## 监听清单（重挂用）"
   if [ -f "$MON" ]; then python3 -c "
-import json;d=json.load(open('$MON'))
-for k,v in (d.items() if isinstance(d,dict) else enumerate(d)): print('-',str(k)[:80])" 2>/dev/null; else echo "(无 $MON)"; fi
+import json
+d=json.load(open('$MON'))
+if isinstance(d, dict) and isinstance(d.get('monitors'), list):
+    print('rehang:', d.get('rehang') or '')
+    for m in d['monitors']:
+        print('-', m.get('id'), m.get('launchd') or m.get('rehang') or '')
+    for x in d.get('not_hung') or []:
+        print('- skip', x)
+else:
+    items = d.items() if isinstance(d, dict) else enumerate(d)
+    for k,v in items:
+        print('-', str(k)[:80])
+" 2>/dev/null; else echo "(无 $MON)"; fi
 } > "$tmp" && mv "$tmp" "$OUT" && echo "HANDOFF 写入 $OUT ($(wc -l < "$OUT") 行)"

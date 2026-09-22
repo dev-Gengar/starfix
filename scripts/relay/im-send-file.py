@@ -31,7 +31,11 @@ def secret():
     return _CFG['app_secret']
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-CHATS_FILE = _os_env.environ.get('FEISHU_CHATS') or os.path.join(HERE, 'feishu-chats.json')
+CHATS_FILE = (
+    _os_env.environ.get('FEISHU_CHATS')
+    or _os_env.environ.get('FEISHU_POLL_CHATS')
+    or os.path.join(_imcfg.fleet_home(), 'im-chats.json')
+)
 
 sys.path.insert(0, HERE)
 import feishu_net

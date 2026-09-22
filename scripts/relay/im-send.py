@@ -50,7 +50,7 @@ def main():
         chat = (r.get('data') or {}).get('chat_id')
         if chat:
             import os
-            cf = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'feishu-chats.json')
+            cf = _os.environ.get('FEISHU_POLL_CHATS') or _os.path.join(_imcfg.fleet_home(), 'im-chats.json')
             chats = json.load(open(cf)) if os.path.exists(cf) else {}
             who = name if to == oid else 'Owner'
             if chats.get(who) != chat:

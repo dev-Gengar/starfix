@@ -37,6 +37,8 @@ Everything lands in one temp directory and is cleaned up automatically when the 
 
 Not needed: iTerm2, AppleScript, an IM app, a database, the network.
 
+After the demo, attach a **real product directory** to the local fleet: [new-project.en.md](new-project.en.md).
+
 ## 2. Run demo.sh
 
 ```bash
