@@ -13,7 +13,7 @@
 
 ## 本机坐标
 
-- 舰队目录：`$FLEET_HOME`（本机 `/Users/dev-ye/fleet-data`）
+- 舰队目录：`$FLEET_HOME`（无默认值，本机 `env.sh` 显式指定）
 - tmux socket：`starfix-fleet`，会话 `fleet`；pane_id 只从 `$FLEET_HOME/fleet-snapshot.txt` 复制
 - 投递：`fleet send --dry-run '%0' '<正文>' '<关键词>'`，关键词必须是正文字面子串；Grok 空闲行是 `❯`，正文必须短于窗格宽度
 - 舰员画像：`$FLEET_HOME/crew/`；对接人画像：`$FLEET_HOME/people/`
@@ -30,6 +30,6 @@
 
 ## 业务项目
 
-规程仓不绑定某一个业务仓。当前项目看 `fleet project show`（登记在 `$FLEET_HOME/projects/`）。新项目：`fleet project add <id> <cwd>` → `use` → `start-fleet.sh --respawn`。说明见 `specs/fleet-projects.md`。
+规程仓不绑定某一个业务仓。当前项目看 `fleet project show`（登记在 `$FLEET_HOME/projects/`）。新项目：`fleet project add <id> <cwd>` → `use` → `fleet start --respawn`。说明见 `specs/fleet-projects.md`。
 
 项目 MCP 只写该项目 `.grok/config.toml`。密钥只进 `SECRETS_DIR`。
